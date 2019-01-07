@@ -15,6 +15,7 @@ class SignupService
     $user->username = $form->username;
     $user->generateAuthKey();
     $user->setPassword($form->password);
+    $user->setPassword($form->confirmPassword);
     $user->email = $form->email;
     $user->email_confirm_token = Yii::$app->security->generateRandomString();
     $user->status = User::STATUS_WAIT;
@@ -25,6 +26,8 @@ class SignupService
 
     return $user;
   }
+
+
 
 
   public function sentEmailConfirm(User $user)

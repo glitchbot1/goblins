@@ -151,7 +151,6 @@ class SiteController extends Controller
       if ($form->load(Yii::$app->request->post()) && $form->validate()) {
 
         $signupService = new SignupService();
-
         try{
           $user = $signupService->signup($form);
           Yii::$app->session->setFlash('success', 'Проверьте свой email для подтверждения регистарции.');

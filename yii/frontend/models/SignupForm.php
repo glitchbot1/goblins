@@ -33,8 +33,8 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Такой email уже есть.'],
 
-            ['password', 'required', 'message' => 'Укажите свой пароль.'],
-           ['confirmPassword', 'required', 'message' => 'Укажите свой пароль.'],
+            ['password','required', 'message' => 'Укажите свой пароль.'],
+            ['confirmPassword', 'validatePassword','message' => 'Подтвердите пароль.'],
             ['password', 'string', 'min' => 8 , 'max'=>16 , 'message'=>'Пароль должен содержать от 8 до 16 символов'],
         ];
     }
@@ -43,7 +43,7 @@ class SignupForm extends Model
       return [
         'username'=>'Имя',
         'password'=>'Пароль',
-        'confirmPassword'=>'GjlПароль',
+        'confirmPassword'=>'Подтверждение пароля',
         'email'=>'Email',
 
       ];
@@ -64,20 +64,21 @@ class SignupForm extends Model
         $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
-        //$user->confirmPassword = $this->password;
         $user->generateAuthKey();
-        
         return $user->save() ? $user : null;
     }
 
-//    public function Password($password,$attribute)
-//    {
-//      $confirmPassword = User::findOne(['password'=>$password]);
-//
-//      if (!$this->hasErrors()) {
-//        if (!$confirmPassword === $password) {
-//          $this->addError($attribute, 'Имя или пароль введены не правильно.');
-//        }
-//      }
-//    }
+    public function validatePassword($attribute,$params)
+    {
+      if(!$this->hasErrors())
+      {
+        if($this->password != $this->confirmPassword)
+        {
+          return $this->addError($attribute,'Пароли не свопадают');
+        }
+
+      }
+
+    }
+
 }
