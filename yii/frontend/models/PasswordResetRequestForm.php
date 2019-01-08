@@ -62,7 +62,7 @@ class PasswordResetRequestForm extends Model
             )
             ->setFrom('asdjkfsdf1Q@mail.ru')
             ->setTo($this->email)
-            ->setSubject('Восстановление пароля ' . Yii::$app->name)
+            ->setSubject('Восстановление пароля ')
             ->send();
     }
 }

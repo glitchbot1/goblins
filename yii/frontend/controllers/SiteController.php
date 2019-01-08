@@ -125,7 +125,7 @@ class SiteController extends Controller
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['asdjkfsdf1Q@mail.ru'])) {
+            if ($model->sendEmail()) {
                 Yii::$app->session->setFlash('success', 'Спасибо,за ваше соообщение.');
             } else {
                 Yii::$app->session->setFlash('error', 'Ошибка.');
@@ -192,7 +192,7 @@ class SiteController extends Controller
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Проверьте свою электронную почту .');
+                Yii::$app->session->setFlash('success', 'Мы отправили вам письмо на почту,чтобы сменить свой пароль на новый пройдите по сссылке.');
 
                 return $this->goHome();
             } else {
@@ -221,7 +221,7 @@ class SiteController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'Новый пароль сохранен.');
+            Yii::$app->session->setFlash('success', 'Пароль успешно  изменен.');
 
             return $this->goHome();
         }

@@ -11,7 +11,7 @@ use common\models\User;
 class ResetPasswordForm extends Model
 {
     public $password;
-
+    public $confirmPassword;
     /**
      * @var \common\models\User
      */
@@ -43,12 +43,25 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            ['password','required', 'message' => 'Пароль должен содержать от 8 до 16 символов'],
+            ['password', 'string', 'min' => 8, 'max'=>16],
+
+            ['confirmPassword','required', 'message' => 'Подтвердите пароль.'],
+            ['confirmPassword','validatePassword'],
         ];
     }
 
-    /**
+    public function attributeLabels()
+    {
+      return [
+
+        'password' => 'Пароль',
+         'confirmPassword' => 'Подтверждение пароля',
+
+      ];
+    }
+
+  /**
      * Resets password.
      *
      * @return bool if password was reset.
@@ -60,5 +73,17 @@ class ResetPasswordForm extends Model
         $user->removePasswordResetToken();
 
         return $user->save(false);
+    }
+
+    public function validatePassword($attribute,$params)
+    {
+      if (!$this->hasErrors())
+      {
+        if ($this->password != $this->confirmPassword)
+        {
+          return $this->addError($attribute,'Пароли не совпадают');
+        }
+
+      }
     }
 }

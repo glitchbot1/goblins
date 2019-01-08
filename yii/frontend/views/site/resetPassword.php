@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
 
+                 <?= $form->field($model, 'confirmPassword')->passwordInput(['autofocus' => true]) ?>
                 <div class="form-group">
                     <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
                 </div>

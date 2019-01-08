@@ -22,20 +22,23 @@ class SignupForm extends Model
     {
         return [
             ['username', 'trim'],
-            ['username', 'required','message' => 'Укажите свой login.'],
+            ['username', 'required','message' => 'Укажите свой login,максимум 12 символов.'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Такой логин уже есть.'],
             ['username', 'string', 'max' => 12],
 
 
             ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email', 'message'=>'Не правильный формат email'],
+            ['email', 'required','message' => 'Укажите свой email.'],
+            ['email', 'email', 'message'=>'Не правильный формат почты'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Такой email уже есть.'],
 
-            ['password','required', 'message' => 'Укажите свой пароль.'],
-            ['confirmPassword', 'validatePassword','message' => 'Подтвердите пароль.'],
-            ['password', 'string', 'min' => 8 , 'max'=>16 , 'message'=>'Пароль должен содержать от 8 до 16 символов'],
+            ['password','required', 'message' => 'Пароль должен содержать от 8 до 16 символов'],
+            ['password', 'string', 'min' => 8 , 'max'=>16],
+
+
+            ['confirmPassword','required', 'message' => 'Подтвердите пароль.'],
+            ['confirmPassword', 'validatePassword'],
         ];
     }
     public function attributeLabels()
